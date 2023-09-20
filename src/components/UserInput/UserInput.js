@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import classes from "./UserInput.module.css";
 
 function UserInput({ onCalculate }) {
   const initialValue = {
@@ -13,7 +14,7 @@ function UserInput({ onCalculate }) {
     setUserInput((prevInput) => {
       return {
         ...prevInput,
-        [event.target.id]: event.target.value,
+        [event.target.id]: +event.target.value,
       };
     });
   };
@@ -29,8 +30,8 @@ function UserInput({ onCalculate }) {
 
   return (
     <div>
-      <form className="form" onSubmit={submitHandler}>
-        <div className="input-group">
+      <form className={classes.form} onSubmit={submitHandler}>
+        <div className={classes["input-group"]}>
           <p>
             <label htmlFor="current-savings">Current Savings ($)</label>
             <input
@@ -50,7 +51,7 @@ function UserInput({ onCalculate }) {
             />
           </p>
         </div>
-        <div className="input-group">
+        <div className={classes["input-group"]}>
           <p>
             <label htmlFor="expected-return">
               Expected Interest (%, per year)
@@ -72,11 +73,15 @@ function UserInput({ onCalculate }) {
             />
           </p>
         </div>
-        <p className="actions">
-          <button onClick={resetHandler} type="reset" className="buttonAlt">
+        <p className={classes.actions}>
+          <button
+            onClick={resetHandler}
+            type="reset"
+            className={classes.buttonAlt}
+          >
             Reset
           </button>
-          <button type="submit" className="button">
+          <button type="submit" className={classes.button}>
             Calculate
           </button>
         </p>
