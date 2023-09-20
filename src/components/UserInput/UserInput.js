@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-function UserInput({ submitUserInput }) {
-  const [userInput, setUserInput] = useState(initialValue);
+function UserInput({ onCalculate }) {
   const initialValue = {
     "current-savings": 0,
     "yearly-contribution": 0,
     "expected-return": 0,
     duration: 0,
   };
+  const [userInput, setUserInput] = useState(initialValue);
 
   const inputChangeHandler = (event) => {
     setUserInput((prevInput) => {
@@ -16,12 +16,11 @@ function UserInput({ submitUserInput }) {
         [event.target.id]: event.target.value,
       };
     });
-    console.log(userInput);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    console.log("submit");
+    onCalculate(userInput);
   };
 
   const resetHandler = () => {
