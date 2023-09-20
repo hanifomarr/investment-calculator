@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "./components/Header/Header";
 import UserInput from "./components/UserInput/UserInput";
 import ResultsTable from "./components/ResultsTable/ResultsTable";
 
 function App() {
-  const calculateHandler = (userInput) => {
-    console.log(
-      "🚀 ~ file: App.js:8 ~ calculateHandler ~ userInput:",
-      userInput
-    );
-    const yearlyData = []; // per-year results
+  const [userInput, setUserInput] = useState(null);
 
+  const calculateHandler = (userInput) => {
+    setUserInput(userInput);
+  };
+
+  const yearlyData = []; // per-year results
+  if (userInput) {
     let currentSavings = +userInput["current-savings"]; // feel free to change the shape of this input object!
     const yearlyContribution = +userInput["yearly-contribution"]; // as mentioned: feel free to change the shape...
     const expectedReturn = +userInput["expected-return"] / 100;
-    const duration = +userInput["duration"];
+    const duration = +userInput.duration;
 
     // The below code calculates yearly results (total savings, interest etc)
     for (let i = 0; i < duration; i++) {
@@ -28,17 +29,20 @@ function App() {
         yearlyContribution: yearlyContribution,
       });
     }
-
-    // do something with yearlyData ...
-  };
+    console.log("🚀 ~ file: App.js:15 ~ App ~ yearlyData:", yearlyData);
+  }
 
   return (
     <div>
       <Header />
-      <UserInput submitUserInput={calculateHandler} />
-      {/* Todo: Show below table conditionally (only once result data is available) */}
-      {/* Show fallback text if no data is available */}
-      <ResultsTable />.
+      <UserInput onCalculate={calculateHandler} />
+      {!userInput && <p>Empty</p>}
+      {userInput && (
+        <ResultsTable
+          data={yearlyData}
+          initialInvestment={userInput["current-savings"]}
+        />
+      )}
     </div>
   );
 }
