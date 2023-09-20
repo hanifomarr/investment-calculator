@@ -36,7 +36,7 @@ function App() {
     <div>
       <Header />
       <UserInput onCalculate={calculateHandler} />
-      {!userInput && <p>Empty</p>}
+      {!userInput && <p style={{ textAlign: "center" }}>Empty</p>}
       {userInput && (
         <ResultsTable
           data={yearlyData}
